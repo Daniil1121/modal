@@ -1,24 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useState, useEffect } from "react";
+import "./App.css";
+import Modal from "./Modal";
 
-function App() {
+function App(): React.ReactElement {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [completed, setCompleted] = useState<boolean>(false);
+
+  const clickHandler = () => {
+    if (completed) {
+      alert("Действие выполнено");
+    } else {
+      setIsOpen(true);
+    }
+  };
+
+  useEffect(() => {
+    if (completed) {
+      alert("Действие выполнено");
+    }
+  }, [completed]);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <button className="btn" onClick={clickHandler}>
+        Выполнить действие!
+      </button>
+      {isOpen && <Modal setCompleted={setCompleted} setIsOpen={setIsOpen} />}
     </div>
   );
 }
